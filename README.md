@@ -1,9 +1,10 @@
-# OpenAI API Quickstart - Node.js example app
+# CineMagic
+
+This project involved creating a proof of concept (POC) for a GPT-powered search bar within an OTT app, showcasing the potential of intelligent movie search and discovery.
 
 This is an example pet name generator app used in the OpenAI API [quickstart tutorial](https://platform.openai.com/docs/quickstart). It uses the [Next.js](https://nextjs.org/) framework with [React](https://reactjs.org/). Check out the tutorial or follow the instructions below to get set up.
 
-![Text box that says name my pet with an icon of a dog](https://user-images.githubusercontent.com/10623307/213887080-b2bc4645-7fdb-4dbd-ae42-efce00d0dc29.png)
-
+It also uses OpenAI API [quickstart tutorial](https://platform.openai.com/docs/quickstart) as well as [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started). You must set your API keys in a `.env` file.
 
 ## Setup
 
@@ -14,7 +15,7 @@ This is an example pet name generator app used in the OpenAI API [quickstart tut
 3. Navigate into the project directory
 
    ```bash
-   $ cd openai-quickstart-node
+   $ cd cinemagic
    ```
 
 4. Install the requirements
@@ -33,7 +34,7 @@ This is an example pet name generator app used in the OpenAI API [quickstart tut
    ```powershell
    $ copy .env.example .env
    ```
-6. Add your [API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file
+6. Add your [API key](https://platform.openai.com/account/api-keys) to the newly created `.env` file for Open AI as well as for [TMDB](https://developer.themoviedb.org/reference/intro/getting-started).
 
 7. Run the app
 
