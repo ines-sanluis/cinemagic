@@ -37,7 +37,7 @@ export default async function (req, res) {
     });
     const movieArray = JSON.parse(completion.data.choices[0].text);
     const movieDataPromises = movieArray.map(async (movie) => {
-      const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMBD_API_KEY}&query=${movie}`);
+      const response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${movie}`);
       return response.data.results[0];
     });
 
