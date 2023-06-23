@@ -8,10 +8,12 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [assets, setAssets] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -23,10 +25,14 @@ export default function Home() {
 
       const data = await response.json();
       if (response.status !== 200) {
+        setErrorMessage("Sorry! It seems like something went wrong. Please wait a minute and try again!");
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
-      console.log(data.result);
-      setAssets(data.result);
+      if (data.result.length === 0) {
+        setErrorMessage("Sorry! Our AI is not that great yet and found no results but you can try again!")
+      } else {
+        setAssets(data.result);
+      }
       setIsLoading(false);
     } catch(error) {
       // Consider implementing your own error handling logic here
@@ -68,8 +74,9 @@ export default function Home() {
           </form>
         </section>
         {assets && <section className={styles.movies}>
-          {assets.map((movie, index) => (
-            <div key={movie.id} className={styles.movie}>
+          {assets.map((movie, index) => {
+            if (movie) {
+              return <div key={index} className={styles.movie}>
               {movie.poster_path && (
                 <img
                 className={styles.moviePoster}
@@ -82,8 +89,12 @@ export default function Home() {
                 <p>{movie.overview}</p>
               </div>
             </div>
-        ))}
+            }
+          })}
         </section>}
+        {errorMessage && <p className={styles.description}>
+          {errorMessage}
+        </p>}
         <footer className={styles.footer}>
           <p>© 2023 CineMagic. All rights reserved.</p>
         </footer>
