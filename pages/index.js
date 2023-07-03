@@ -59,7 +59,7 @@ export default function Home() {
       <main className={styles.main}>
         {/* Hero */}
         <section className={styles.hero}>
-          <h1 className={styles.title}>⭐ CineMagic 🪄</h1>
+          <h1 className={styles.title}>🎬 CineMagic 🪄</h1>
           <h2 className={styles.subtitle}>Where movie discovery meets AI</h2>
           <p className={styles.description}>
             Our unique search feature powered by GPT allows you to find films by plot, actor, or even your current mood!
