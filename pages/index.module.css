@@ -28,14 +28,59 @@
   margin: 0;
 }
 .description {
-  max-width: 500px;
+  max-width: 700px;
+  line-height: 24px;
+}
+.overview {
+  line-height: 19px;
+}
+.errorContainer {
+  text-align: center;
+}
+.error {
+  background-color: #d95a5a;
+  padding: 30px;
+  text-align: center;
+  border-radius: 12px;
+  margin: 20px;
+  width: auto;
+  display: inline-block;
 }
 
-.movies {
+.movies,
+.loading {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.loadingMovie {
+  display: flex;
+  max-width: 500px;
+  min-height: 330px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgb(52, 53, 65) 25%, rgb(75, 76, 85) 50%, rgb(52, 53, 65) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-animation 3.5s infinite ease-in-out;
+}
+
+.year {
+  background-color: #10a37f;
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+  color: #fff;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 .movie {
@@ -89,10 +134,25 @@
 
 .moviePoster {
   border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.moviePoster:hover{
+  transform: scale(1.1);
 }
 .movies {
   display: flex;
 }
 .movieDetails {
   margin-left: 20px;
+}
+
+.spinIcon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
 }

@@ -2,19 +2,25 @@ import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { IoSend } from 'react-icons/io5';
-import {IoEllipsisHorizontal} from 'react-icons/io5';
+import {BiLoaderAlt} from 'react-icons/bi';
 
 export default function Home() {
+  // This state variable holds the input from the user.
   const [input, setInput] = useState("");
+  // This state variable holds the movies fetched from the API.
   const [assets, setAssets] = useState();
+  // This state variable holds a boolean that represents whether the app is currently loading data from the API.
   const [isLoading, setIsLoading] = useState(false);
+  // This state variable holds error messages and the function to update them.
   const [errorMessage, setErrorMessage] = useState("");
 
   async function onSubmit(event) {
+    // This prevents the default form submission behavior, which would refresh the page.
     event.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
     try {
+      // We use fetch to make a POST request to our own API at /api/generate
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
@@ -24,25 +30,26 @@ export default function Home() {
       });
 
       const data = await response.json();
+      // Handle errors from the API.
       if (response.status !== 200) {
+        console.error(response.status, data);
         setErrorMessage("Sorry! It seems like something went wrong. Please wait a minute and try again!");
-        throw data.error || new Error(`Request failed with status ${response.status}`);
       }
       if (data.result.length === 0) {
         setErrorMessage("Sorry! Our AI is not that great yet and found no results but you can try again!")
       } else {
-        setAssets(data.result);
+        setAssets(data.result); // Store the data in the state variable.
       }
       setIsLoading(false);
     } catch(error) {
-      // Consider implementing your own error handling logic here
       console.error(error);
-      alert(error.message);
+      setErrorMessage("Sorry! It seems like something went wrong. Please wait a minute and try again!");
       setIsLoading(false);
     }
   }
 
   return (
+    // The return of our functional component specifies what is rendered to the DOM.
     <div className={styles.container}>
       <Head>
         <title>CineMagic</title>
@@ -50,6 +57,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        {/* Hero */}
         <section className={styles.hero}>
           <h1 className={styles.title}>⭐ CineMagic 🪄</h1>
           <h2 className={styles.subtitle}>Where movie discovery meets AI</h2>
@@ -58,6 +66,7 @@ export default function Home() {
             Dive into the magic of cinema with CineMagic
           </p>
         </section>
+        {/* Search Bar */}
         <section className={styles.search}>
           <form onSubmit={onSubmit}>
             <input
@@ -69,32 +78,46 @@ export default function Home() {
               className={styles.searchBar}
             />
             <button type="submit" className={styles.searchIcon}>
-              {isLoading ? <IoEllipsisHorizontal /> : <IoSend />}
+              {isLoading ? <BiLoaderAlt className={styles.spinIcon} /> : <IoSend/>}
             </button>
           </form>
         </section>
-        {assets && <section className={styles.movies}>
+        {/* Loading Skeleton */}
+        {isLoading && <section className={styles.loading}>
+          {[...Array(10)].map((_, index) => {
+            return <div key={index} className={styles.loadingMovie} />
+          })}
+        </section>}
+        {/* Movies */}
+        {!isLoading && assets && <section className={styles.movies}>
           {assets.map((movie, index) => {
             if (movie) {
               return <div key={index} className={styles.movie}>
               {movie.poster_path && (
-                <img
-                className={styles.moviePoster}
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                alt={`Poster for ${movie.title}`}
-                />
+                <a href={`https://www.themoviedb.org/movie/${movie.id}`} target="_blank" rel="noopener noreferrer">
+                  <img
+                    className={styles.moviePoster}
+                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                    alt={`Poster for ${movie.title}`}
+                  />
+                </a>
               )}
               <div className={styles.movieDetails}>
                 <h2>{movie.title}</h2>
-                <p>{movie.overview}</p>
+                <span className={styles.year}>{movie.release_date && movie.release_date.substring(0, 4)}</span>
+                <p className={styles.overview}>{movie.overview}</p>
               </div>
             </div>
             }
           })}
         </section>}
-        {errorMessage && <p className={styles.description}>
-          {errorMessage}
-        </p>}
+        {/* Error Message */}
+        {errorMessage && <div className={styles.errorContainer}>
+          <p className={styles.error}>
+            {errorMessage}
+          </p>
+        </div>}
+        {/* Footer */}
         <footer className={styles.footer}>
           <p>© 2023 CineMagic. All rights reserved.</p>
         </footer>
