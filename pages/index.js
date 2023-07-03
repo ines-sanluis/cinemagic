@@ -52,7 +52,7 @@ export default function Home() {
     // The return of our functional component specifies what is rendered to the DOM.
     <div className={styles.container}>
       <Head>
-        <title>CineMagic</title>
+        <title>CineMagic - Movie discovery </title>
         <meta name="description" content="Welcome to CineMagic, your magical cinema search experience." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
