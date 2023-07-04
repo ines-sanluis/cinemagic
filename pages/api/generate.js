@@ -95,7 +95,7 @@ export default async function (req, res) {
 // It also provides an example of what the input and output should look like.
 function generatePrompt(input) {
   return `Create a valid JavaScript array of movie titles that best match this search term ordered from most to least relevant.
-    Generate up to 10 titles.
+    Generate up to 9 titles.
     The response must be a valid array. Do not escape the double quotes in the output
 
     Example:

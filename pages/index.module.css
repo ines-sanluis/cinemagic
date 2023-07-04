@@ -2,6 +2,7 @@
   background-color: rgb(68, 70, 84);
   color: #fff;
   min-height: 100vh;
+  position: relative;
 }
 
 .hero {
@@ -127,6 +128,8 @@
 }
 
 .footer {
+  position: absolute;
+  bottom: 0;
   margin-left: 15px;
   padding-bottom: 20px;
 }
